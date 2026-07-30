@@ -35,7 +35,7 @@ HAL_StatusTypeDef INA219_WriteRegister(I2C_HandleTypeDef *hi2c, uint8_t addr7, u
 HAL_StatusTypeDef INA219_Init(I2C_HandleTypeDef *hi2c, uint8_t addr7) {
     HAL_StatusTypeDef ret;
 
-    ret = INA219_WriteRegister(hi2c, addr7, INA219_REG_CONFIG, 0x399F);
+    ret = INA219_WriteRegister(hi2c, addr7, INA219_REG_CONFIG, 0x3FFF);
     if (ret != HAL_OK) return ret;
 
     ret = INA219_WriteRegister(hi2c, addr7, INA219_REG_CALIB, INA219_GetCalibrationValue());
@@ -61,17 +61,17 @@ HAL_StatusTypeDef INA219_ReadShuntVoltage_mV(I2C_HandleTypeDef *hi2c, uint8_t ad
     return HAL_OK;
 }
 
-HAL_StatusTypeDef INA219_ReadCurrent_A(I2C_HandleTypeDef *hi2c, uint8_t addr7, float *current) {
+HAL_StatusTypeDef INA219_ReadCurrent_mA(I2C_HandleTypeDef *hi2c, uint8_t addr7, int16_t *current) {
     uint16_t raw;
     HAL_StatusTypeDef ret;
 
-    ret = INA219_WriteRegister(hi2c, addr7, INA219_REG_CALIB, INA219_GetCalibrationValue());
-    if (ret != HAL_OK) return ret;
+//    ret = INA219_WriteRegister(hi2c, addr7, INA219_REG_CALIB, INA219_GetCalibrationValue());
+//    if (ret != HAL_OK) return ret;
 
     ret = INA219_ReadRegister(hi2c, addr7, INA219_REG_CURRENT, &raw);
     if (ret != HAL_OK) return ret;
 
-    *current = (float)((int16_t)raw) * INA219_CURRENT_LSB_A;
+    *current = (int16_t)raw / 10;
     return HAL_OK;
 }
 

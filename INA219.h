@@ -21,7 +21,7 @@
 #define INA219_REG_CURRENT     0x04
 #define INA219_REG_CALIB       0x05
 
-#define INA219_SHUNT_OHMS      0.1f
+#define INA219_SHUNT_OHMS      0.01f
 #define INA219_CURRENT_LSB_A   0.0001f   // 100uA/bit
 
 
@@ -31,7 +31,7 @@ HAL_StatusTypeDef INA219_ReadRegister(I2C_HandleTypeDef *hi2c, uint8_t addr7, ui
 HAL_StatusTypeDef INA219_WriteRegister(I2C_HandleTypeDef *hi2c, uint8_t addr7, uint8_t reg,uint16_t data);
 HAL_StatusTypeDef INA219_ReadBusVoltage_V(I2C_HandleTypeDef *hi2c, uint8_t addr7, float *voltage);
 HAL_StatusTypeDef INA219_ReadShuntVoltage_mV(I2C_HandleTypeDef *hi2c, uint8_t addr7, float *voltage);
-HAL_StatusTypeDef INA219_ReadCurrent_A(I2C_HandleTypeDef *hi2c, uint8_t addr7, float *current);
+HAL_StatusTypeDef INA219_ReadCurrent_mA(I2C_HandleTypeDef *hi2c, uint8_t addr7, int16_t *current);
 HAL_StatusTypeDef INA219_ReadPower_W(I2C_HandleTypeDef *hi2c, uint8_t addr7, float *power);
 
 #endif
